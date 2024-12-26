@@ -19,7 +19,7 @@
 </template>
 
 <script setup>
-
+import CommonAside from '@/components/CommonAside.vue'
 </script>
 
 <style lang="less" scoped>
