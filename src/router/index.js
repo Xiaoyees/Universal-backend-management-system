@@ -6,7 +6,16 @@ const routes = [
 		// 根路径路由配置
 		path: "/", // 设置路径为根路径
     name: "main", // 路由名称为main'
-		component: () => import("@/views/main.vue") // 懒加载主页组件，当访问根路径时动态加载main.vue组件
+		component: () => import("@/views/main.vue"),// 懒加载主页组件，当访问根路径时动态加载main.vue组件
+		redirect: '/home',// 将用户重定向到主页
+		children:[
+			{
+				path: "home",
+				name: "home",
+				component: () => import("@/views/Home.vue"),
+			},
+
+		]
 	},
 ];
 

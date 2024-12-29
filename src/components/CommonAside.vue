@@ -1,10 +1,15 @@
 <template>
-  <el-aside width="180px">
+  <el-aside :width="width">
     <el-menu
       background-color="#545c64"
       text-color="#fff"
+      :collapse="isCollapse"
+      :collapse-transition="false"
     >
-        <h3>通用后台管理系统</h3>
+        <!-- 展开状态 -->
+        <h3 v-show="!isCollapse">通用后台管理系统</h3>
+        <!-- 收起状态 -->
+        <h3 v-show="isCollapse">后台</h3>
         <!-- 只有一级菜单 -->
         <el-menu-item 
           v-for="item in noChildren"
@@ -43,6 +48,7 @@
 <script setup>
 import {ref,computed} from 'vue'
 import { useRouter } from 'vue-router';
+import { useAllDataStore }from "@/stores"
 const router=useRouter()
 
 const list =ref([
@@ -94,9 +100,15 @@ const noChildren = computed(() => list.value.filter(item => !item.children))
 
 // 计算属性：过滤出有子项的菜单项
 const hasChildren = computed(() => list.value.filter(item => item.children))
-const clickMenu=(item)=>{
-    router.push(item.path)
-}
+
+
+const store=useAllDataStore()
+const isCollapse=computed(()=>store.state.isCollapse)
+// 根据 isCollapse 的值计算宽度
+// 当 isCollapse 为 true 时，侧边栏折叠，宽度设置为 '64px'
+// 当 isCollapse 为 false 时，侧边栏展开，宽度设置为 '180px'
+const width = computed(() => store.state.isCollapse ? '64px' : '180px')
+
 </script>
 
 <style lang="less" scoped>

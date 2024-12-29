@@ -1,7 +1,5 @@
 <template>
   <router-view> </router-view>
-  <el-button type="success">默认</el-button>
-  <el-button type="success">Success</el-button>
 </template>
 
 <script setup>
