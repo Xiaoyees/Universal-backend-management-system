@@ -2,32 +2,37 @@ import Mock from 'mockjs'
 
 // get请求从config.url获取参数，post从config.body中获取参数
 function param2Obj(url) {
-  const search = url.split('?')[1]
+  // 将URL按'?'分割，取后半部分即查询字符串部分
+  const search = url.split('?')[1];
+  
+  // 如果没有查询字符串，返回空对象
   if (!search) {
-    return {}
+    return {};
   }
+
+  // 将查询字符串转换为JSON格式并解析为对象
   return JSON.parse(
-    '{"' +
-    decodeURIComponent(search)
-      .replace(/"/g, '\\"')
-      .replace(/&/g, '","')
-      .replace(/=/g, '":"') +
+    '{"' + 
+    decodeURIComponent(search)  // 解码查询字符串
+      .replace(/"/g, '\\"')    // 转义双引号
+      .replace(/&/g, '","')    // 将 '&' 替换为 '","' 分隔键值对
+      .replace(/=/g, '":"') +  // 将 '=' 替换为 '":"' 分隔键和值
     '"}'
-  )
+  );
 }
 
 let List = []
 const count = 200
-//模拟200条用户数据
+// 模拟200条用户数据
 for (let i = 0; i < count; i++) {
   List.push(
     Mock.mock({
-      id: Mock.Random.guid(),
-      name: Mock.Random.cname(),
-      addr: Mock.mock('@county(true)'),
-      'age|18-60': 1,
-      birth: Mock.Random.date(),
-      sex: Mock.Random.integer(0, 1)
+      id: Mock.Random.guid(),       // 生成一个全局唯一标识符作为用户的ID
+      name: Mock.Random.cname(),    // 生成一个随机的中文名字
+      addr: Mock.mock('@county(true)'), // 生成一个随机的详细地址（包含省市区）
+      'age|18-60': 1,               // 随机生成18到60之间的年龄
+      birth: Mock.Random.date(),    // 生成一个随机的出生日期
+      sex: Mock.Random.integer(0, 1)// 随机生成性别，0或1表示不同性别
     })
   )
 }
@@ -41,7 +46,7 @@ export default {
     //    * @return {{code: number, count: number, data: *[]}}
     //    */
   getUserList: config => {
-      					  //limit默认是10，因为分页器默认也是一页10个
+    //limit默认是10，因为分页器默认也是一页10个
     const { name, page = 1, limit = 10 } = param2Obj(config.url)
    
     const mockList = List.filter(user => {

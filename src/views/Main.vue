@@ -9,6 +9,7 @@
         <el-header class="el-header">
           <common-header />
         </el-header>
+        <common-tab />
         <!-- 主要内容区域 -->
         <el-main class="right-main">
           <router-view></router-view>
@@ -21,6 +22,7 @@
 <script setup>
 import CommonAside from '@/components/CommonAside.vue'
 import CommonHeader from '@/components/CommonHeader.vue'
+import CommonTab from '@/components/CommonTab.vue'
 </script>
 
 <style lang="less" scoped>
