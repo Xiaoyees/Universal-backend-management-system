@@ -2,6 +2,9 @@ import Mock from 'mockjs'
 
 export default {
   getMenu: config => {
+    // 从配置的body部分解析出用户名和密码
+    // JSON.parse 的作用是将一个 JSON 字符串解析为 JavaScript 对象。
+    // 这里使用了解构赋值，直接从解析后的对象中提取username和password属性
     const { username, password } = JSON.parse(config.body)
     // 先判断用户是否存在
     // 判断账号和密码是否对应

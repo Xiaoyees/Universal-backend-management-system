@@ -13,6 +13,8 @@ function initState() {
       }
     ],
     currentMenu: null,
+    menulist: [],
+    token: "",
   }
 }
 //第一个参数要求是一个独一无二的名字
@@ -53,6 +55,7 @@ export const useAllDataStore = defineStore('allData', () => {
     // 在找到的位置移除一个标签
     state.value.tags.splice(index, 1);
   }
+  
   //需要把所有定义的state，getters，actions返回出去
   return {
     state,
