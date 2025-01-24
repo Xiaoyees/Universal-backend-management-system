@@ -7,6 +7,8 @@
     </el-button>
     <el-breadcrumb separator="/" class="bread">
       <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+      <!-- 当前面包屑项存在时，显示该项并提供导航 -->
+      <el-breadcrumb-item v-if="current" :to="current.path">{{current.label}}</el-breadcrumb-item>
     </el-breadcrumb>
   </div>
     <div class="r-content">
@@ -44,6 +46,7 @@ const handleLoginOut=()=>{
     store.clean()
     router.push('/login')
 }
+const current = computed(()=>store.state.currentMenu)
 </script>
 
 <style lang="less" scoped>
