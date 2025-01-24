@@ -32,11 +32,11 @@ const loginForm = reactive({
 
 const handleLogin = async ()=>{
     const res = await proxy.$api.getMenu(loginForm)
-    console.log(res)
-    // store.updateMenuList(res.menuList)
-    // store.state.token = res.token
-    // store.addMenu(router)
-    // router.push('/home')
+    // console.log(res)
+    store.updateMenuList(res.menuList)
+    store.state.token = res.token
+    store.addMenu(router)
+    router.push('/home')
 }
 </script>
 

@@ -9,21 +9,21 @@ const routes = [
 		component: () => import("@/views/main.vue"),// 懒加载主页组件，当访问根路径时动态加载main.vue组件
 		redirect: '/home',// 将用户重定向到主页
 		children:[
-			{
-				path: "home",
-				name: "home",
-				component: () => import("@/views/Home.vue"),
-			},
-			{
-				path: "user",
-				name: "user",
-				component: () => import("@/views/User.vue"),
-			},
-			{
-				path: "mall",
-				name: "mall",
-				component: () => import("@/views/Mall.vue"),
-			},
+			// {
+			// 	path: "home",
+			// 	name: "home",
+			// 	component: () => import("@/views/Home.vue"),
+			// },
+			// {
+			// 	path: "user",
+			// 	name: "user",
+			// 	component: () => import("@/views/User.vue"),
+			// },
+			// {
+			// 	path: "mall",
+			// 	name: "mall",
+			// 	component: () => import("@/views/Mall.vue"),
+			// },
 
 		]
 

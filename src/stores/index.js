@@ -15,6 +15,7 @@ function initState() {
     currentMenu: null,
     menulist: [],
     token: "",
+    routerList: [],
   }
 }
 //第一个参数要求是一个独一无二的名字
@@ -55,12 +56,49 @@ export const useAllDataStore = defineStore('allData', () => {
     // 在找到的位置移除一个标签
     state.value.tags.splice(index, 1);
   }
-  
+  function updateMenuList(val) {
+    state.value.menulist = val;
+  }
+
+  function addMenu(router){
+    const menu = state.value.menulist;
+    // 动态导入所有位于 ../views 目录下及其子目录中的 Vue 组件
+    // 这种方式有助于提高性能，因为只有在组件实际需要时才会被加载
+    const module = import.meta.glob("../views/**/*.vue");
+    const routerArr = []
+    menu.forEach((item) => {
+      if (item.children) {
+        item.children.forEach((val) => {
+          let url = `../views/${val.url}.vue`;
+          val.component = module[url];
+          routerArr.push(...item.children);
+        });
+      } else {
+        let url = `../views/${item.url}.vue`;
+        item.component = module[url];
+        routerArr.push(item);
+      }
+    });
+    state.value.routerList = [];
+    // console.log(router.getRoutes())
+    let routers = router.getRoutes();
+    routers.forEach(item => {
+      if (item.name == 'main' || item.name == 'login' || item.name == '404') {
+        return
+      } else {
+        router.removeRoute(item.name)
+      }
+    })
+    routerArr.forEach(item => {
+      state.value.routerList.push(router.addRoute('main', item));
+    })
+  }
   //需要把所有定义的state，getters，actions返回出去
   return {
     state,
     selectMenu,
-    updateTags
-
+    updateTags,
+    updateMenuList,
+    addMenu,
   }
 })

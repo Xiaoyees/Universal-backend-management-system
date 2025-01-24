@@ -54,50 +54,53 @@ import { useRouter,useRoute } from 'vue-router';
 import { useAllDataStore }from "@/stores"
 const router=useRouter()
 const route=useRoute()
-const list =ref([
-      	{
-          path: '/home',
-          name: 'home',
-          label: '首页',
-          icon: 'house',
-          url: 'Home'
-      	},
-        {
-            path: '/mall',
-            name: 'mall',
-            label: '商品管理',
-            icon: 'video-play',
-            url: 'Mall'
-        },
-        {
-            path: '/user',
-            name: 'user',
-            label: '用户管理',
-            icon: 'user',
-            url: 'User'
-        },
-        {
-            path: 'other',
-            label: '其他',
-            icon: 'location',
-            children: [
-                {
-                    path: '/page1',
-                    name: 'page1',
-                    label: '页面1',
-                    icon: 'setting',
-                    url: 'Page1'
-                },
-                {
-                    path: '/page2',
-                    name: 'page2',
-                    label: '页面2',
-                    icon: 'setting',
-                    url: 'Page2'
-                }
-            ]
-        }
-])
+const store=useAllDataStore()
+// const list =ref([
+//       	{
+//           path: '/home',
+//           name: 'home',
+//           label: '首页',
+//           icon: 'house',
+//           url: 'Home'
+//       	},
+//         {
+//             path: '/mall',
+//             name: 'mall',
+//             label: '商品管理',
+//             icon: 'video-play',
+//             url: 'Mall'
+//         },
+//         {
+//             path: '/user',
+//             name: 'user',
+//             label: '用户管理',
+//             icon: 'user',
+//             url: 'User'
+//         },
+//         {
+//             path: 'other',
+//             label: '其他',
+//             icon: 'location',
+//             children: [
+//                 {
+//                     path: '/page1',
+//                     name: 'page1',
+//                     label: '页面1',
+//                     icon: 'setting',
+//                     url: 'Page1'
+//                 },
+//                 {
+//                     path: '/page2',
+//                     name: 'page2',
+//                     label: '页面2',
+//                     icon: 'setting',
+//                     url: 'Page2'
+//                 }
+//             ]
+//         }
+// ])
+
+const list = computed(()=>store.state.menulist)
 // 计算属性：过滤出没有子项的菜单项
 const noChildren = computed(() => list.value.filter(item => !item.children))
 
@@ -105,7 +108,7 @@ const noChildren = computed(() => list.value.filter(item => !item.children))
 const hasChildren = computed(() => list.value.filter(item => item.children))
 
 
-const store=useAllDataStore()
+
 const isCollapse=computed(()=>store.state.isCollapse)
 // 根据 isCollapse 的值计算宽度
 // 当 isCollapse 为 true 时，侧边栏折叠，宽度设置为 '64px'
