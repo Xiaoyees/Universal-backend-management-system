@@ -8,6 +8,7 @@ import * as ElementPlusIconsVue from '@element-plus/icons-vue' //从 @element-pl
 import { createPinia } from 'pinia'
 import '@/api/mock.js'
 import api from './api/api'
+import { useAllDataStore } from "@/stores"
 
 // 创建 Vue 应用实例，并将根组件 App 传递给它
 const app = createApp(App)
@@ -16,9 +17,12 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component)
 }
 const pinia = createPinia()
+
 // 将全局API实例添加到应用的全局属性中，以便在应用的任何部分都能方便地访问API
 app.config.globalProperties.$api = api
 app.use(pinia)
+const store = useAllDataStore()
+store.addMenu(router, "refresh")
 app.use(ElementPlus)
 // 使用路由插件，并将应用挂载到 DOM 中 id 为 'app' 的元素上，启动应用
 app.use(router).mount('#app')
