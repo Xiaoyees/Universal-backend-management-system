@@ -141,6 +141,24 @@ export const useAllDataStore = defineStore('allData', () => {
       state.value.routerList.push(router.addRoute('main', item));
     })
   }
+  /**
+   * 执行清理操作的函数
+   * 该函数主要执行以下任务：
+   * 1. 遍历并执行状态中的所有路由清理函数
+   * 2. 重置应用状态到初始状态
+   * 3. 从本地存储中移除状态数据
+   */
+  function clean() {
+    // 遍历状态中的路由清理函数列表，并尝试执行每个清理函数
+    state.value.routerList.forEach((item) => {
+      // 如果当前项是一个函数，则执行它
+      if (item) item();
+    });
+    // 重置当前应用状态为初始状态
+    state.value = initState();
+    // 从本地存储中移除状态数据
+    localStorage.removeItem('store');
+  };
   //需要把所有定义的state，getters，actions返回出去
   return {
     state,
@@ -148,5 +166,6 @@ export const useAllDataStore = defineStore('allData', () => {
     updateTags,
     updateMenuList,
     addMenu,
+    clean
   }
 })
